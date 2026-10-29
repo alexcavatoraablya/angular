@@ -1,0 +1,60 @@
+<div class="flex min-h-screen items-center justify-center bg-gray-100 px-4">
+  <div class="w-full max-w-sm rounded-xl bg-white p-8 shadow-md">
+    <h2 class="mb-6 text-center text-2xl font-semibold text-gray-800">Вхід</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="space-y-4">
+      <div class="flex flex-col">
+        <label for="email" class="mb-1 text-sm font-medium text-gray-700">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          class="rounded-md border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+        />
+        @if (form.controls.email.touched && form.controls.email.errors) {
+          <small class="mt-1 text-sm text-red-600">
+            @if (form.controls.email.errors['required']) { Вкажіть email }
+            @else if (form.controls.email.errors['email']) { Некоректний email }
+          </small>
+        }
+      </div>
+
+      <div class="flex flex-col">
+        <label for="password" class="mb-1 text-sm font-medium text-gray-700">Пароль</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          class="rounded-md border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+        />
+        @if (form.controls.password.touched && form.controls.password.errors) {
+          <small class="mt-1 text-sm text-red-600">
+            @if (form.controls.password.errors['required']) { Вкажіть пароль }
+            @else if (form.controls.password.errors['minlength']) { Мінімум 6 символів }
+          </small>
+        }
+      </div>
+
+      @if (errorMessage()) {
+        <div class="rounded-md bg-red-100 px-3 py-2 text-sm text-red-700">
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        [disabled]="loading()"
+        class="w-full rounded-md bg-blue-600 py-2.5 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {{ loading() ? 'Зачекайте...' : 'Увійти' }}
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-gray-600">
+      Немає акаунта?
+      <a routerLink="/auth/register" class="font-medium text-blue-600 hover:underline">Зареєструватися</a>
+    </p>
+  </div>
+</div>
