@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://salo.itstep.click/api',
+  apiUrl: 'https://qrcode31kn-api.itstep.click/api',
 };

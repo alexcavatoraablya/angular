@@ -76,5 +76,7 @@ ng g c features/auth/pages/register --type=component
 
 ng g class shared/validators/password-match --type=validator --skip-tests
 
+ng g c features/home/pages/home --type=component
+
 
 ```

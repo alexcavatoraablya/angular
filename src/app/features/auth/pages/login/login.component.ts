@@ -14,6 +14,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  //Це як UseState на React TS
   loading = signal(false);
   errorMessage = signal<string | null>(null);
 

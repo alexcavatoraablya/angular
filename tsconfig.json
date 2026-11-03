@@ -4,7 +4,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@/*": ["src/app/*"]
+      "@/*": ["./src/app/*"]
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
