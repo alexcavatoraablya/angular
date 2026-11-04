@@ -27,6 +27,7 @@ export class RegisterComponent {
     },
     { validators: passwordMatchValidator },
   );
+  imagePreview: any;
 
   submit() {
     if (this.form.invalid) {
@@ -44,5 +45,9 @@ export class RegisterComponent {
         this.loading.set(false);
       },
     });
+  }
+
+  onFileSelected($event: Event) {
+    
   }
 }
