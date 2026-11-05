@@ -1,0 +1,60 @@
+<div class="mx-auto max-w-3xl p-6">
+  <div class="mb-6 flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-gray-900">Тести</h1>
+    <a
+      routerLink="/tests/new"
+      class="rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700"
+    >
+      + Створити тест
+    </a>
+  </div>
+
+  @if (items().length === 0) {
+    <div class="rounded-xl border border-dashed border-gray-300 p-10 text-center text-gray-500">
+      Тестів ще немає. Створіть перший!
+    </div>
+  }
+
+  <div class="space-y-4">
+    @for (item of items(); track item.test.id) {
+      <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-semibold text-gray-900">{{ item.test.title }}</h2>
+            @if (item.test.description) {
+              <p class="mt-1 text-sm text-gray-600">{{ item.test.description }}</p>
+            }
+            <p class="mt-2 text-xs text-gray-500">
+              Питань: {{ item.test.questions.length }} · Балів: {{ item.totalPoints }}
+              @if (item.test.timeLimitMinutes) {
+                · Ліміт: {{ item.test.timeLimitMinutes }} хв
+              }
+              · Створено {{ item.test.createdAt | date: 'dd.MM.yyyy HH:mm' }}
+            </p>
+            @if (item.best) {
+              <p class="mt-1 text-xs font-medium text-emerald-700">
+                Найкращий результат: {{ item.best.score }} / {{ item.best.maxScore }}
+              </p>
+            }
+          </div>
+          <div class="flex shrink-0 gap-2">
+            <a
+              [routerLink]="['/tests', item.test.id, 'take']"
+              class="rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700"
+            >
+              Пройти
+            </a>
+            <button
+              type="button"
+              (click)="remove(item.test)"
+              class="rounded-lg border border-red-300 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50"
+            >
+              Видалити
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+

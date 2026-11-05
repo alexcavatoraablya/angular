@@ -1,0 +1,151 @@
+<form [formGroup]="form" (ngSubmit)="save()" class="mx-auto max-w-3xl space-y-6 p-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold text-gray-900">Новий тест</h1>
+    <a routerLink="/tests" class="text-sm text-gray-600 hover:underline">← До списку</a>
+  </div>
+
+  <!-- Основні дані -->
+  <div class="space-y-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div>
+      <label class="mb-1 block text-sm font-medium text-gray-700">Назва *</label>
+      <input
+        type="text"
+        formControlName="title"
+        maxlength="200"
+        class="w-full rounded-lg border px-3 py-2"
+        [class]="invalid(form.controls.title) ? 'border-red-500' : 'border-gray-300'"
+      />
+      @if (invalid(form.controls.title)) {
+        <p class="mt-1 text-xs text-red-600">Вкажіть назву (до 200 символів)</p>
+      }
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium text-gray-700">Опис</label>
+      <textarea
+        formControlName="description"
+        rows="2"
+        maxlength="1000"
+        class="w-full rounded-lg border border-gray-300 px-3 py-2"
+      ></textarea>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium text-gray-700">
+        Ліміт часу, хв (необов'язково, 1–600)
+      </label>
+      <input
+        type="number"
+        formControlName="timeLimitMinutes"
+        min="1"
+        max="600"
+        class="w-40 rounded-lg border px-3 py-2"
+        [class]="invalid(form.controls.timeLimitMinutes) ? 'border-red-500' : 'border-gray-300'"
+      />
+      @if (invalid(form.controls.timeLimitMinutes)) {
+        <p class="mt-1 text-xs text-red-600">Значення від 1 до 600</p>
+      }
+    </div>
+  </div>
+
+  <!-- Питання -->
+  <div formArrayName="questions" class="space-y-4">
+    @for (q of questions.controls; track q; let qi = $index) {
+      <div [formGroupName]="qi" class="space-y-3 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-gray-900">Питання {{ qi + 1 }}</h2>
+          <button
+            type="button"
+            (click)="removeQuestion(qi)"
+            [disabled]="questions.length === 1"
+            class="text-sm text-red-600 hover:underline disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Видалити питання
+          </button>
+        </div>
+
+        <div>
+              <textarea
+                formControlName="text"
+                rows="2"
+                maxlength="1000"
+                placeholder="Текст питання *"
+                class="w-full rounded-lg border px-3 py-2"
+                [class]="invalid(controlOf(q, 'text')) ? 'border-red-500' : 'border-gray-300'"
+              ></textarea>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-700">Балів (1–100):</label>
+          <input
+            type="number"
+            formControlName="points"
+            min="1"
+            max="100"
+            class="w-24 rounded-lg border px-2 py-1"
+            [class]="invalid(controlOf(q, 'points')) ? 'border-red-500' : 'border-gray-300'"
+          />
+        </div>
+
+        <div formArrayName="options" class="space-y-2">
+          <p class="text-xs text-gray-500">
+            Позначте правильні варіанти галочкою (можна кілька).
+          </p>
+          @for (o of optionsOf(q).controls; track o; let oi = $index) {
+            <div [formGroupName]="oi" class="flex items-center gap-2">
+              <input type="checkbox" formControlName="isCorrect" class="h-4 w-4 accent-emerald-600" />
+              <input
+                type="text"
+                formControlName="text"
+                maxlength="500"
+                [placeholder]="'Варіант ' + (oi + 1)"
+                class="flex-1 rounded-lg border px-3 py-1.5"
+                [class]="invalid(controlOf(o, 'text')) ? 'border-red-500' : 'border-gray-300'"
+              />
+              <button
+                type="button"
+                (click)="removeOption(q, oi)"
+                [disabled]="optionsOf(q).length <= 2"
+                class="px-2 text-red-600 disabled:cursor-not-allowed disabled:opacity-30"
+                aria-label="Видалити варіант"
+              >
+                ✕
+              </button>
+            </div>
+          }
+          @if (submitted() && optionsOf(q).errors?.['noCorrect']) {
+            <p class="text-xs text-red-600">Позначте хоча б один правильний варіант</p>
+          }
+          <button
+            type="button"
+            (click)="addOption(q)"
+            class="text-sm text-indigo-600 hover:underline"
+          >
+            + Додати варіант
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <button
+    type="button"
+    (click)="addQuestion()"
+    class="w-full rounded-xl border-2 border-dashed border-gray-300 py-3 text-gray-600 hover:border-indigo-400 hover:text-indigo-600"
+  >
+    + Додати питання
+  </button>
+
+  @if (submitted() && form.invalid) {
+    <p class="text-sm text-red-600">Перевірте форму: є незаповнені або некоректні поля.</p>
+  }
+
+  <div class="flex justify-end gap-3">
+    <a routerLink="/tests" class="rounded-lg border border-gray-300 px-4 py-2 text-gray-700">
+      Скасувати
+    </a>
+    <button type="submit" class="rounded-lg bg-indigo-600 px-5 py-2 font-medium text-white hover:bg-indigo-700">
+      Зберегти тест
+    </button>
+  </div>
+</form>

@@ -1,0 +1,109 @@
+<div class="mx-auto max-w-3xl p-6">
+  @if (notFound()) {
+    <p class="text-gray-600">Тест не знайдено.</p>
+    <a routerLink="/tests" class="text-indigo-600 hover:underline">← До списку</a>
+  } @else if (test(); as t) {
+    <div class="mb-6 flex items-start justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">{{ t.title }}</h1>
+        @if (t.description) {
+          <p class="mt-1 text-sm text-gray-600">{{ t.description }}</p>
+        }
+      </div>
+      @if (!result() && remaining() !== null) {
+        <div
+          class="rounded-lg px-3 py-1.5 font-mono text-lg font-semibold"
+          [class]="remaining()! <= 60 ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-800'"
+        >
+          ⏱ {{ timeLabel() }}
+        </div>
+      }
+    </div>
+
+    @if (result(); as r) {
+      <div
+        class="mb-6 rounded-xl border p-5"
+        [class]="percent() >= 60 ? 'border-emerald-300 bg-emerald-50' : 'border-amber-300 bg-amber-50'"
+      >
+        <p class="text-lg font-semibold">
+          Результат: {{ r.score }} / {{ r.maxScore }} ({{ percent() }}%)
+        </p>
+        @if (r.timedOut) {
+          <p class="text-sm text-amber-700">Час вичерпано — тест завершено автоматично.</p>
+        }
+        <div class="mt-3 flex gap-3">
+          <button
+            type="button"
+            (click)="restart()"
+            class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          >
+            Пройти ще раз
+          </button>
+          <a routerLink="/tests" class="rounded-lg border border-gray-300 px-4 py-2 text-sm">
+            До списку
+          </a>
+        </div>
+      </div>
+    }
+
+    <div class="space-y-5">
+      @for (q of t.questions; track q.id; let qi = $index) {
+        <fieldset
+          class="rounded-xl border bg-white p-5 shadow-sm"
+          [class]="
+                result()
+                  ? isCorrect(q)
+                    ? 'border-emerald-400'
+                    : 'border-red-400'
+                  : 'border-gray-200'
+              "
+        >
+          <legend class="px-1 text-sm text-gray-500">
+            Питання {{ qi + 1 }} · {{ q.points }} б.
+            @if (isMultiple(q)) {
+              · кілька відповідей
+            }
+          </legend>
+          <p class="mb-3 font-medium text-gray-900">{{ q.text }}</p>
+
+          <div class="space-y-2">
+            @for (o of q.answerOptions; track o.id) {
+              <label
+                class="flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2"
+                [class]="optionClass(q, o)"
+              >
+                <input
+                  [type]="isMultiple(q) ? 'checkbox' : 'radio'"
+                  [name]="'q' + q.id"
+                  [checked]="isSelected(q, o)"
+                  [disabled]="!!result()"
+                  (change)="select(q, o)"
+                  class="h-4 w-4 accent-indigo-600"
+                />
+                <span>{{ o.text }}</span>
+                @if (result() && o.isCorrect) {
+                  <span class="ml-auto text-xs font-medium text-emerald-700">✔ правильно</span>
+                }
+              </label>
+            }
+          </div>
+        </fieldset>
+      }
+    </div>
+
+    @if (!result()) {
+      <div class="mt-6 flex items-center justify-between">
+            <span class="text-sm text-gray-500">
+              Відповіді: {{ answeredCount() }} / {{ t.questions.length }}
+            </span>
+        <button
+          type="button"
+          (click)="submit()"
+          class="rounded-lg bg-emerald-600 px-5 py-2 font-medium text-white hover:bg-emerald-700"
+        >
+          Завершити тест
+        </button>
+      </div>
+    }
+  }
+</div>
