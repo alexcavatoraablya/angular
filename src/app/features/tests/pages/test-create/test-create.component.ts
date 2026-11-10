@@ -96,7 +96,7 @@ export class TestCreateComponent {
 
     const value = this.form.getRawValue();
     const test = new TestEntity();
-    test.title = value.title.trim();
+    test.title = value.title!.trim();
     test.description = value.description?.trim() || undefined;
     test.timeLimitMinutes = value.timeLimitMinutes ?? undefined;
 

@@ -1,0 +1,483 @@
+[
+  {
+    "title": "Основи Angular",
+    "description": "Базові поняття фреймворку Angular: компоненти, сигнали, маршрутизація, форми, HTTP.",
+    "timeLimitMinutes": 20,
+    "questions": [
+      {
+        "text": "Яка функція використовується для отримання залежності без конструктора?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "inject()", "isCorrect": true },
+          { "text": "provide()", "isCorrect": false },
+          { "text": "require()", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Які з наведених API належать до Angular Signals?",
+        "points": 2,
+        "answerOptions": [
+          { "text": "signal()", "isCorrect": true },
+          { "text": "computed()", "isCorrect": true },
+          { "text": "useState()", "isCorrect": false },
+          { "text": "effect()", "isCorrect": true }
+        ]
+      },
+      {
+        "text": "Яка властивість маршруту ліниво завантажує компонент?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "component", "isCorrect": false },
+          { "text": "loadComponent", "isCorrect": true },
+          { "text": "redirectTo", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка властивість маршруту ліниво завантажує масив дочірніх маршрутів?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "children", "isCorrect": false },
+          { "text": "loadChildren", "isCorrect": true },
+          { "text": "loadRoutes", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Як змінити значення сигналу count на основі попереднього?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "count.update((v) => v + 1)", "isCorrect": true },
+          { "text": "count = count + 1", "isCorrect": false },
+          { "text": "count.next(count + 1)", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Як прочитати значення сигналу title у шаблоні?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "{{ title }}", "isCorrect": false },
+          { "text": "{{ title() }}", "isCorrect": true },
+          { "text": "{{ title.value }}", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка директива відображає компонент поточного маршруту?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "<router-outlet>", "isCorrect": true },
+          { "text": "<router-view>", "isCorrect": false },
+          { "text": "<ng-content>", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка директива створює посилання для навігації без перезавантаження сторінки?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "href", "isCorrect": false },
+          { "text": "routerLink", "isCorrect": true },
+          { "text": "ngHref", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Який синтаксис вбудованого control flow використовується для умовного відображення?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "@if", "isCorrect": true },
+          { "text": "v-if", "isCorrect": false },
+          { "text": "#if", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що є обов'язковим у блоці @for?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "track", "isCorrect": true },
+          { "text": "index", "isCorrect": false },
+          { "text": "key", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Які види прив'язки даних існують в Angular?",
+        "points": 2,
+        "answerOptions": [
+          { "text": "Інтерполяція {{ }}", "isCorrect": true },
+          { "text": "Прив'язка властивості [prop]", "isCorrect": true },
+          { "text": "Прив'язка події (event)", "isCorrect": true },
+          { "text": "Прив'язка через @@prop", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Який синтаксис використовується для двосторонньої прив'язки?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "[(ngModel)]", "isCorrect": true },
+          { "text": "{(ngModel)}", "isCorrect": false },
+          { "text": "([ngModel])", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Який модуль потрібно імпортувати в компонент для роботи з реактивними формами?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "FormsModule", "isCorrect": false },
+          { "text": "ReactiveFormsModule", "isCorrect": true },
+          { "text": "HttpClientModule", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Які класи використовуються в реактивних формах?",
+        "points": 2,
+        "answerOptions": [
+          { "text": "FormControl", "isCorrect": true },
+          { "text": "FormGroup", "isCorrect": true },
+          { "text": "FormArray", "isCorrect": true },
+          { "text": "FormList", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Який валідатор перевіряє, що поле не порожнє?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Validators.required", "isCorrect": true },
+          { "text": "Validators.notEmpty", "isCorrect": false },
+          { "text": "Validators.exists", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що повертає метод HttpClient.get()?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Promise", "isCorrect": false },
+          { "text": "Observable", "isCorrect": true },
+          { "text": "Signal", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Коли фактично виконується HTTP-запит, створений через HttpClient?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Одразу після виклику get()", "isCorrect": false },
+          { "text": "Після підписки (subscribe)", "isCorrect": true },
+          { "text": "Після перезавантаження сторінки", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Який хук життєвого циклу викликається перед знищенням компонента?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "ngOnInit", "isCorrect": false },
+          { "text": "ngOnDestroy", "isCorrect": true },
+          { "text": "ngAfterViewInit", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Який хук викликається один раз після ініціалізації вхідних властивостей?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "ngOnInit", "isCorrect": true },
+          { "text": "ngOnChanges", "isCorrect": false },
+          { "text": "ngDoCheck", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка стратегія виявлення змін перевіряє компонент лише при зміні входів, подіях або сигналах?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Default", "isCorrect": false },
+          { "text": "OnPush", "isCorrect": true },
+          { "text": "Manual", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка функція оголошує вхідну властивість компонента на сигналах?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "input()", "isCorrect": true },
+          { "text": "prop()", "isCorrect": false },
+          { "text": "param()", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка функція оголошує вихідну подію компонента?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "output()", "isCorrect": true },
+          { "text": "emit()", "isCorrect": false },
+          { "text": "event()", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка команда CLI створює новий компонент?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "ng generate component", "isCorrect": true },
+          { "text": "ng new component", "isCorrect": false },
+          { "text": "ng add component", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка функція запускає standalone-застосунок?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "bootstrapApplication()", "isCorrect": true },
+          { "text": "platformBrowser().run()", "isCorrect": false },
+          { "text": "createApp()", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Які з наведених пайпів вбудовані в Angular?",
+        "points": 2,
+        "answerOptions": [
+          { "text": "DatePipe", "isCorrect": true },
+          { "text": "CurrencyPipe", "isCorrect": true },
+          { "text": "AsyncPipe", "isCorrect": true },
+          { "text": "MoneyPipe", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Як отримати параметр :id із поточного маршруту?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "inject(ActivatedRoute).snapshot.paramMap.get('id')", "isCorrect": true },
+          { "text": "inject(Router).params.id", "isCorrect": false },
+          { "text": "window.location.id", "isCorrect": false }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Комерційні авто",
+    "description": "Перевірте свої знання про фургони, вантажні авто та їх експлуатацію.",
+    "timeLimitMinutes": 20,
+    "questions": [
+      {
+        "text": "Який виробник випускає модель Sprinter?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Volkswagen", "isCorrect": false },
+          { "text": "Mercedes-Benz", "isCorrect": true },
+          { "text": "MAN", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Який виробник випускає модель Crafter?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Volkswagen", "isCorrect": true },
+          { "text": "Renault", "isCorrect": false },
+          { "text": "Iveco", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Для чого призначений рефрижератор?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Перевезення вантажів за заданої температури", "isCorrect": true },
+          { "text": "Перевезення пасажирів", "isCorrect": false },
+          { "text": "Буксирування авто", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Які типи кузова бувають у комерційних авто?",
+        "points": 2,
+        "answerOptions": [
+          { "text": "Фургон", "isCorrect": true },
+          { "text": "Бортовий", "isCorrect": true },
+          { "text": "Кабріолет", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка країна є батьківщиною бренду Iveco?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Італія", "isCorrect": true },
+          { "text": "Франція", "isCorrect": false },
+          { "text": "Швеція", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка країна є батьківщиною бренду MAN?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Німеччина", "isCorrect": true },
+          { "text": "Нідерланди", "isCorrect": false },
+          { "text": "Чехія", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка модель є фургоном Renault?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Master", "isCorrect": true },
+          { "text": "Ducato", "isCorrect": false },
+          { "text": "Transit", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка модель є фургоном Ford?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Transit", "isCorrect": true },
+          { "text": "Daily", "isCorrect": false },
+          { "text": "Movano", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Які моделі побудовані на спільній платформі з Fiat Ducato?",
+        "points": 2,
+        "answerOptions": [
+          { "text": "Peugeot Boxer", "isCorrect": true },
+          { "text": "Citroën Jumper", "isCorrect": true },
+          { "text": "Mercedes-Benz Vito", "isCorrect": false },
+          { "text": "Volkswagen Transporter", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що таке тентований кузов?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Платформа з каркасом, накрита тентом", "isCorrect": true },
+          { "text": "Цільнометалевий кузов з вікнами", "isCorrect": false },
+          { "text": "Кузов-цистерна", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Який тип пального найчастіше використовують у комерційних фургонах?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Дизель", "isCorrect": true },
+          { "text": "Бензин А-95", "isCorrect": false },
+          { "text": "Водень", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Для чого в сучасних дизельних авто використовується AdBlue?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Зменшення викидів оксидів азоту", "isCorrect": true },
+          { "text": "Охолодження двигуна", "isCorrect": false },
+          { "text": "Змащення коробки передач", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що означає DPF у дизельному авто?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Сажовий (дизельний сажовий) фільтр", "isCorrect": true },
+          { "text": "Датчик тиску палива", "isCorrect": false },
+          { "text": "Система повного приводу", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яке посвідчення водія потрібне для авто повною масою до 3,5 т?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Категорія B", "isCorrect": true },
+          { "text": "Категорія C", "isCorrect": false },
+          { "text": "Категорія D", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка категорія потрібна для вантажівки повною масою понад 7,5 т?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "C", "isCorrect": true },
+          { "text": "C1", "isCorrect": false },
+          { "text": "B", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що таке повна маса автомобіля?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Маса авто разом із максимально дозволеним вантажем і людьми", "isCorrect": true },
+          { "text": "Маса порожнього авто без пального", "isCorrect": false },
+          { "text": "Маса лише вантажу", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що таке вантажопідйомність?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Різниця між повною масою та спорядженою масою", "isCorrect": true },
+          { "text": "Об'єм вантажного відсіку", "isCorrect": false },
+          { "text": "Потужність двигуна", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "У яких одиницях зазвичай вказують об'єм вантажного відсіку фургона?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Кубічні метри (м³)", "isCorrect": true },
+          { "text": "Квадратні метри (м²)", "isCorrect": false },
+          { "text": "Тонни", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що варто перевірити під час купівлі вживаного комерційного авто?",
+        "points": 2,
+        "answerOptions": [
+          { "text": "Історію обслуговування та пробіг", "isCorrect": true },
+          { "text": "Стан кузова та рами на корозію", "isCorrect": true },
+          { "text": "Результати комп'ютерної діагностики", "isCorrect": true },
+          { "text": "Колір салону", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що зазвичай означає позначення L2H2 у фургонів?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Довжину та висоту кузова", "isCorrect": true },
+          { "text": "Кількість дверей і сидінь", "isCorrect": false },
+          { "text": "Клас екологічності двигуна", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що означає «механіка» в описі авто?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Механічна (ручна) коробка передач", "isCorrect": true },
+          { "text": "Механічний кондиціонер", "isCorrect": false },
+          { "text": "Відсутність електроніки", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Яка перевага автоматичної коробки передач у місті?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Менша втомлюваність водія в заторах", "isCorrect": true },
+          { "text": "Нижча ціна ремонту", "isCorrect": false },
+          { "text": "Відсутність потреби в обслуговуванні", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Що таке бортовий кузов?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Відкрита платформа з відкидними бортами", "isCorrect": true },
+          { "text": "Закритий ізотермічний фургон", "isCorrect": false },
+          { "text": "Самоскидний кузов", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Чим ізотермічний фургон відрізняється від рефрижератора?",
+        "points": 1,
+        "answerOptions": [
+          { "text": "Він утеплений, але не має холодильної установки", "isCorrect": true },
+          { "text": "Він має потужнішу холодильну установку", "isCorrect": false },
+          { "text": "Нічим, це синоніми", "isCorrect": false }
+        ]
+      },
+      {
+        "text": "Які елементи обов'язково змінюють під час планового ТО двигуна?",
+        "points": 2,
+        "answerOptions": [
+          { "text": "Моторну оливу", "isCorrect": true },
+          { "text": "Оливний фільтр", "isCorrect": true },
+          { "text": "Лобове скло", "isCorrect": false },
+          { "text": "Акумулятор", "isCorrect": false }
+        ]
+      }
+    ]
+  }
+]
+

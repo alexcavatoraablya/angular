@@ -9,7 +9,7 @@ import {
 import { TestStorageService } from '@/core/services/test-storage.service';
 
 @Component({
-  imports: [],
+  imports: [RouterLink],
   selector: 'app-test-take',
   styleUrl: './test-take.component.css',
   templateUrl: './test-take.component.html',

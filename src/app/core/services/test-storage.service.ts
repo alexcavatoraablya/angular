@@ -1,8 +1,10 @@
 import { Service } from '@angular/core';
-import { AnswerOptionEntity,
+import {
+  AnswerOptionEntity,
   QuestionEntity,
   TestAttemptEntity,
-  TestEntity } from '@/features/tests/models';
+  TestEntity,
+} from '@/features/tests/models';
 
 type SeqName = 'test' | 'question' | 'option' | 'attempt';
 
@@ -20,6 +22,10 @@ export class TestStorageService {
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }
 
+  hasTests(): boolean {
+    return this.read<unknown[]>(this.testsKey, []).length > 0;
+  }
+
   getById(id: number): TestEntity | undefined {
     return this.getAll().find((t) => t.id === id);
   }
@@ -29,30 +35,27 @@ export class TestStorageService {
     test.id = this.nextId('test');
     test.createdAt = new Date();
 
-    // обхід дерева: тест -> питання -> варіанти відповідей
     test.questions.forEach((q, qi) => {
       q.id = this.nextId('question');
       q.testId = test.id;
       q.orderIndex = qi;
       q.answerOptions.forEach((o, oi) => {
         o.id = this.nextId('option');
-        o.questionId = q.id; // зв'язує варіант з питанням
+        o.questionId = q.id;
         o.orderIndex = oi;
       });
     });
 
     const all = this.read<unknown[]>(this.testsKey, []);
     all.push(test);
-    this.write(this.testsKey, all); // записує оновлений список тестів у localStorage
+    this.write(this.testsKey, all);
     return test;
   }
 
   delete(id: number): void {
-    // видаляє сам тест із масиву тестів
     const tests = this.read<TestEntity[]>(this.testsKey, []).filter((t) => t.id !== id);
     this.write(this.testsKey, tests);
 
-    // каскадне видалення: очищає всі спроби проходження, які належали цьому тесту
     const attempts = this.read<TestAttemptEntity[]>(this.attemptsKey, []).filter(
       (a) => a.testId !== id,
     );
@@ -80,10 +83,7 @@ export class TestStorageService {
 
   /** Питання зараховується, якщо обрано рівно всі правильні варіанти. */
   isQuestionCorrect(question: QuestionEntity, selected: number[] = []): boolean {
-    // відфільтровує ID тільки тих варіантів відповідей, які позначені як правильні (isCorrect === true)
     const correct = question.answerOptions.filter((o) => o.isCorrect).map((o) => o.id);
-    // перевіряє кількість вибраних відповідей збігається з кількістю правильних
-    // та чи кожна правильна відповідь присутня в масиві вибраних користувачем
     return correct.length === selected.length && correct.every((id) => selected.includes(id));
   }
 
@@ -96,12 +96,10 @@ export class TestStorageService {
     const attempt = new TestAttemptEntity();
     attempt.testId = test.id;
     attempt.startedAt = startedAt;
-    attempt.finishedAt = new Date(); // фіксує час завершення тесту
+    attempt.finishedAt = new Date();
     attempt.timedOut = timedOut;
     attempt.answers = answers;
-    // рахує максимальну кількість балів
     attempt.maxScore = test.questions.reduce((sum, q) => sum + q.points, 0);
-    // рахує фактично набрані бали
     attempt.score = test.questions.reduce(
       (sum, q) => sum + (this.isQuestionCorrect(q, answers[q.id]) ? q.points : 0),
       0,
@@ -112,27 +110,23 @@ export class TestStorageService {
   // ---------- Внутрішнє ----------
 
   private nextId(name: SeqName): number {
-    // зчитує поточний стан лічильників. Якщо їх немає, створює об'єкт з нулями
     const seq = this.read<Record<SeqName, number>>(this.seqKey, {
       test: 0,
       question: 0,
       option: 0,
       attempt: 0,
     });
-    seq[name] = (seq[name] ?? 0) + 1; // збільшує потрібний лічильник на 1
-    this.write(this.seqKey, seq); // зберігає оновлений лічильник
-    return seq[name]; // повертає новий ID
+    seq[name] = (seq[name] ?? 0) + 1;
+    this.write(this.seqKey, seq);
+    return seq[name];
   }
 
   private reviveTest(raw: any): TestEntity {
-    // перетворює об'єкт на екземпляр класу TestEntity
     const test = Object.assign(new TestEntity(), raw) as TestEntity;
-    test.createdAt = new Date(raw.createdAt); // перетворює рядок з JSON назад у повноцінний об'єкт Date
-    // регідрація питань та їх сортування за orderIndex
+    test.createdAt = new Date(raw.createdAt);
     test.questions = ((raw.questions ?? []) as any[])
       .map((rq) => {
         const q = Object.assign(new QuestionEntity(), rq) as QuestionEntity;
-        // регідрація варіантів відповідей та їх сортування за orderIndex
         q.answerOptions = ((rq.answerOptions ?? []) as any[])
           .map((ro) => Object.assign(new AnswerOptionEntity(), ro) as AnswerOptionEntity)
           .sort((a, b) => a.orderIndex - b.orderIndex);
@@ -152,20 +146,18 @@ export class TestStorageService {
   private read<T>(key: string, fallback: T): T {
     try {
       const value = localStorage.getItem(key);
-      // якщо дані є в localStorage, розпарсує JSON, інакше повертає дефолтне значення (fallback)
       return value ? (JSON.parse(value) as T) : fallback;
     } catch {
-      return fallback; // безпечний відлов помилок, наприклад, якщо JSON пошкоджено
+      return fallback;
     }
   }
 
   private write(key: string, value: unknown): void {
     try {
-      // серіалізує об'єкт у рядок JSON та записує в localStorage
       localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
-      console.error('Не вдалося зберегти в localStorage', e); // запобігає падінню додатку, якщо сховище переповнене
+      console.error('Не вдалося зберегти в localStorage', e);
     }
   }
 }
-
+ 
